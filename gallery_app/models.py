@@ -9,6 +9,9 @@ class Album(models.Model):
     description = models.CharField(max_length=1000, null=True, blank=True)
     created = models.DateTimeField(default = timezone.now)
 
+    class Meta:
+        ordering = ['-created']
+
     def __str__(self):
         return self.title
 
@@ -19,7 +22,7 @@ class Tag(models.Model):
         return self.name
 
 class Picture(models.Model):
-    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, default=1)
     tag = models.ManyToManyField(Tag)
 
     image = models.ImageField(upload_to='images/')
